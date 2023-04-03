@@ -1,0 +1,293 @@
+#include <iostream>
+
+using namespace std;
+
+class Node 
+
+{
+
+  public:
+
+   int data;
+
+   Node*next;
+
+};
+
+class Linkedlist
+
+{
+
+   public:
+
+   
+
+   Node *head;
+
+   Linkedlist()
+
+   {
+
+      head = NULL;
+
+   }
+
+   bool isempty()
+
+   {
+
+      if (head == NULL)
+
+      return true;
+
+      else 
+
+      return false;
+
+   }
+
+   void insertfirst(int newvalue)
+
+   {
+
+      if (isempty())
+
+      {
+
+         Node*newnode = new Node();
+
+         newnode->data = newvalue;
+
+         newnode ->next = NULL;
+
+         head = newnode;
+
+      }
+
+      else
+
+      {
+
+         Node*newnode = new Node();
+
+         newnode->data = newvalue;
+
+         newnode -> next = head;
+
+         head = newnode;
+
+      }
+
+   }
+
+   void display()
+
+   {
+
+      Node*temp = head;
+
+      while(temp != NULL)
+
+      {
+
+         cout << temp -> data <<" ";
+
+         temp = temp -> next;
+
+      }
+
+   }
+
+   int count()
+
+   {
+
+      int counter = 0;
+
+      Node*temp = head;
+
+      while(temp != NULL)
+
+      {
+
+         counter++;
+
+         temp = temp -> next;
+
+      }
+
+      return counter ;
+
+   }
+
+   bool isfound (int key)
+
+   {
+
+      bool found = false;
+
+      Node*temp = head;
+
+      while (temp != NULL)
+
+      {
+
+         if (temp -> data ==key)
+
+         found = true;
+
+         temp=temp->next;
+
+      }
+
+      return found;
+
+   }
+
+   void Delete(int item)
+
+   {
+
+      if(isempty())
+
+        cout << "List is empty, there isn't item to delete \n";
+
+        
+
+        Node*delptr = head;
+
+      if( head-> data == item) 
+
+      {
+
+         head = head -> next;
+
+         delete delptr;
+
+      }
+
+      else 
+
+      {
+
+         Node *prev = NULL;
+
+         delptr = head;
+
+         while (delptr-> data !=item)
+
+         {
+
+            prev = delptr ;
+
+            delptr = delptr ->next;
+
+         }
+
+         prev->next = delptr ->next;
+
+         delete delptr;
+
+      }
+
+   }
+
+};
+
+int main()
+
+{
+
+   Linkedlist lst;
+
+   if(lst.isempty())
+
+   cout << "The list is empty \n";
+
+   else 
+
+   cout <<"the list contain : " <<lst.count()<<endl;
+
+   
+
+   int time ;
+
+   cout << "How many items: "<<endl;
+
+   cin >> time;
+
+   int item;
+
+  for (int i = 0; i < time; i++)
+
+  {
+
+   cout << "\nEnter item \n";
+
+   cin >> item;
+
+   lst.insertfirst(item);
+
+   lst.display();
+
+  }
+
+  char search;
+
+  cout << "\nYou want to search for item: ";
+
+  cin >> search;
+
+  if (search=='y'){
+
+   cout <<"\nThe list contains: "<<lst.count()<<endl;
+
+   cout <<"enter item search: \n";
+
+   cin >> item;
+
+   if (lst.isfound(item))
+
+   cout << "item found \n";
+
+   else 
+
+   cout << "item not found \n";}
+
+   else
+
+   cout << "ok thanks!"<<endl;
+
+  char del;
+
+  cout << "\nYou want to delete item: ";
+
+  cin >> del;
+
+  if (del=='y')
+
+  {
+
+   cout <<"\nThe list contains: "<<lst.count()<<endl;
+
+   cout << "this is the list Before delete : " ;
+
+   lst.display();
+
+   cout << "\nEnter item to delete: ";
+
+   cin >> item;
+
+   lst.Delete(item);
+
+   cout << "\nthis is the list after delete : ";
+
+   lst.display();
+
+   }
+
+   else 
+
+   cout << "Ok goodbye!";
+
+}
