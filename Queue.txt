@@ -1,197 +1,94 @@
 #include <iostream>
 using namespace std;
 
-class Node
+#define SIZE 5  // CONSTANT SIZE = 5
+int A[SIZE];
+int front = -1;
+int rear = -1;
+//function to check if queue is empty
+bool isempty()
 {
-   public:
-   int data;
-   Node*next;
-   Node()
-   {
-      data = 0;
-      next = NULL;
-   }
-};
-
-class queue 
+ if(front == -1 && rear == -1)
+ return true;
+ else
+ return false;
+}
+//function to insert element in queue
+void enqueue ( int value )
 {
-   public:
-   Node*front;
-   Node*rear;
-   
-   queue()
-   {
-      front = rear = NULL;
-   }
-
-   bool is_empty()
-   {
-      if (front==NULL && rear==NULL)
-        return true;
-      else
-        return false;
-   }
-
-   void Enqueue(int item)
-   {
-      Node*newnode = new Node();
-      newnode->data = item;
-
-      if (is_empty())
-        front = rear = newnode;
-      else 
-        rear->next = newnode;
-        rear = newnode;
-   }
-
-   void display()
-   {
-      if (is_empty())
-        cout <<"There is no items in Queue"<<endl;
-      else
-      {  
-       Node*temp = front;
-       while (temp != NULL)
-         {
-           cout << temp->data<<" ";
-           temp = temp->next;
-         }
-         cout << endl;
-      }
-   }
-
-   int Dequeue()
-   {
-      int delvalue;
-      if (is_empty())
-        cout <<"There is not any items";
-      else if (front==rear)
-      {
-         delete front;
-         front = rear = NULL;
-      }
-      else
-      {
-        Node*delptr = front;
-        front = front ->next;
-        delvalue = delptr->data;
-        delete delptr;
-      }
-      return delvalue;
-   }
-
-   int count ()
-   {
-      Node*temp = front;
-      int counter = 0;
-
-      while (temp != NULL)
-      {
-         counter++;
-         temp = temp -> next;
-      }
-      return counter;
-   }
-
-  int get_front()
-  {
-   return front->data;
-  }
-  int get_rear()
-  {
-   return rear->data;
-  }
-
-  bool search(int item)
-  {
-   bool found = false;
-   Node*temp = front;
-   while (temp != NULL)
-   {
-      if (temp->data == item)
-        found = true;
-      temp = temp->next;
-   }
-   return found;
-  }
-
-  void clear()
-  {
-   while(!is_empty())
-   {
-      Dequeue();
-   }
-  }
-
-};
+ if (rear == SIZE-1)
+  cout<<"Queue is full \n";
+ else
+ {
+  if( front == -1)
+   front = 0;
+  rear++;
+  A[rear] = value;
+ }
+}
+//function to remove element from queue
+void dequeue ( )
+{
+ if( isempty() )
+  cout<<"Queue is empty\n";
+else
+ if( front == rear )
+  front = rear = -1;
+ else
+  front++;
+}
+//function to display element at front
+void showfront( )
+{
+ if( isempty())
+  cout<<"Queue is empty\n";
+ else
+  cout<<"element at front is:"<<A[front]<<"\n";
+}
+//function to display elements of the queue
+void displayQueue()
+{
+ if(isempty())
+  cout<<"Queue is empty\n";
+ else
+ {
+  for( int i=front ; i<= rear ; i++)
+   cout<<A[i]<<" ";
+  cout<<"\n";
+ }
+}
 
 int main()
 {
- queue q;  
- int items;
- cout <<"\nHow many item you want to insert: "<<endl;
- cin >> items;
- for (int i = 0; i < items; i++)
- {
-    int item;
-    cout <<"\nEnter item to Enqueue: "<<endl;
-    cin >> item;
-    q.Enqueue(item);
-    q.display();
- }
- cout <<"\n--------All items before methods-------"<<endl;
- q.display();
- cout<<"The queue count: " <<q.count(); 
- cout<<"\nThe queue front: " <<q.get_front();
- cout<<"\nThe queue rear: " <<q.get_rear();
- 
- char ser;
- cout <<"\nDo you want to search for items?: ";
- cin >> ser;
-  if (ser=='y'||ser=='Y')
-  {
-  int item;
-  cout << "\nEnter item to search: "<<endl;
-  cin >> item;
- if(q.search(item))
-   cout <<"Item found"<<endl;
- else 
-   cout <<"Not here"<<endl;
- }
- else 
- cout << "Thank you please contine other functions!"<<endl;
+ //inserting elements in queue
+ cout<<"Inserting elements in queue\n";
+ enqueue(2);
+ displayQueue();
+ enqueue(3);
+ displayQueue();
+ enqueue(5);
+ displayQueue();
+ enqueue(7);
+ displayQueue();
+ enqueue(8);
 
- char del;
- cout <<"Do you want to delete items?: ";
- cin >> del;
-  if (del=='y'||del=='Y')
-  {
-  cout << "\n------------ before Dequeue-------"<<endl;
-  q.display();
-  cout<<"The queue count before: " <<q.count();
-  cout <<"\nThe deleted item was: "<<q.Dequeue();
-  cout <<"\n----------------After Dequeue-----------"<<endl;
-  q.display();
-  //cout <<"The deleted item was: ";
-  cout<<"The queue count after: " <<q.count();
-  }
- else 
-  cout << "Thank you please contine other functions!"<<endl;
+ displayQueue();
+ // queue is full
+ enqueue(9);
+ //show element at front
+ showfront();
 
- char cl;
- cout <<"\nDo you want to clear items?: ";
- cin >> cl;
-  if (cl=='y'||cl=='Y')
-  {
-    cout << "\n------------ before clear-------"<<endl;
-    q.display();
-    cout<<"The queue count before: " <<q.count();
-    q.clear();
-    cout <<"\n----------------After clear-----------"<<endl;
-    q.display();
-    cout<<"The queue count after: " <<q.count();
- }
-  else 
-   cout << "Thank you!"<<endl;
- 
+ cout<<"Removing elements from queue\n";
+ //removing elements from the queue
+ dequeue();
+ displayQueue();
+ dequeue();
+ displayQueue();
+ dequeue();
+ displayQueue();
+ dequeue();
+ displayQueue();
+ dequeue();
+displayQueue();
+ return 0;
 }
