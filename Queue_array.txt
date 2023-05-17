@@ -1,0 +1,103 @@
+#include <iostream>
+using namespace std;
+
+#define size  5
+
+class Queue
+{
+   private:
+   int rear;
+   int front;
+   int arr[size];
+
+   public:
+   Queue()
+   {
+      rear = -1;
+      front = -1;
+   }
+
+   bool isfull()
+   {
+      if (rear == size -1)
+        return true;
+      else 
+        return false;
+   }
+
+   bool isempty()
+   {
+      if (front == -1)
+        return true;
+      else 
+        return false;
+   }
+
+   void Enqueue(int value)
+   {
+      if (isfull())
+      {
+         cout <<"There is no place to add any item!!!\n";
+      }
+      else
+      {
+         if (front == -1)
+           front = 0;
+         rear ++;
+         arr[rear] = value; 
+      }
+   }
+
+   int Dequeue()
+   {
+      int delvalue;
+      if (isempty())
+        cout <<"There is no Items!!!\n";
+
+      else 
+      {
+         delvalue = arr[front];
+         front ++;
+         if (front > rear)
+           front = rear = -1;
+      }
+      return delvalue ;
+   }
+
+   void Display()
+   {
+      if (isempty())
+       cout <<"There is no items to display !!!!\n";
+
+      else
+         cout <<"Queue Elements are: \n";
+       for (int i = front; i <= rear; i++)
+        {
+          cout <<arr[i]<<" ";
+        }
+        cout << endl;
+   }
+
+   void clear()
+   {
+      while (!isempty())
+      {
+         Dequeue();
+      }
+      
+   }
+};
+int main()
+{
+  Queue q;
+
+  q.Enqueue(10);
+  q.Enqueue(20);
+  q.Enqueue(30);
+  q.Enqueue(40);
+  q.Display();
+  q.Dequeue();
+  q.Dequeue();
+  q.Dequeue();
+  q.Display();
+}
